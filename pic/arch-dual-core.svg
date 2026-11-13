@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300">
+<style>text { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; }</style>
+<rect width="680" height="300" fill="#FFFFFF"/>
+<text x="40" y="36" font-size="16" font-weight="600" fill="#0C447C">ESP32-S3 双核分工部署</text>
+
+<rect x="60" y="70" width="260" height="120" rx="12" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+<text x="190" y="100" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041">核 0</text>
+<text x="190" y="128" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#085041">WiFi 驱动 · lwIP · socket</text>
+<text x="190" y="152" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">WIFI_PS_NONE（关省电）</text>
+<text x="190" y="172" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">系统事件 · NVS</text>
+
+<rect x="360" y="70" width="260" height="120" rx="12" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.5"/>
+<text x="490" y="100" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#0C447C">核 1</text>
+<text x="490" y="128" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0C447C">LRP 协议栈（xTask 固定核 1）</text>
+<text x="490" y="152" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">发现/收发 · AES-GCM · 重传/恢复</text>
+<text x="490" y="172" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">credit/限速 · 应用负载与统计</text>
+
+<text x="320" y="132" text-anchor="middle" font-size="11" fill="#5F5E5A">socket</text>
+<text x="320" y="148" text-anchor="middle" font-size="11" fill="#5F5E5A">API</text>
+
+<rect x="60" y="216" width="560" height="36" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text x="340" y="234" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">效果：WiFi 协议处理不再与 LRP 收发/加解密抢核，延迟抖动主要剩下空口本身</text>
+<text x="340" y="278" text-anchor="middle" font-size="11" fill="#5F5E5A">实现：firmware/esp32-node/main/main.cpp（app_main 初始化后 xTaskCreatePinnedToCore(..., 1)）</text>
+</svg>

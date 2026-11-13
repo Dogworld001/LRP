@@ -1,0 +1,76 @@
+menu "RDMA Node 配置"
+
+    choice RDMA_ROLE
+        prompt "设备角色"
+        default RDMA_ROLE_TARGET
+        help
+            两块板子分别选 target 与 initiator。
+
+        config RDMA_ROLE_TARGET
+            bool "target(暴露注册内存,等待远端读写)"
+
+        config RDMA_ROLE_INITIATOR
+            bool "initiator(发起 Write/Send/Read/Atomic)"
+
+        config RDMA_ROLE_BENCH_SERVER
+            bool "bench-server(RDMA 测量目标端)"
+
+        config RDMA_ROLE_BENCH_CLIENT
+            bool "bench-client(RDMA 测量发起端)"
+
+        config RDMA_ROLE_PEER
+            bool "peer(对等零配置入网,推荐演示)"
+    endchoice
+
+    config RDMA_WIFI_SSID
+        string "WiFi SSID"
+        default "dwrdma_test"
+
+    config RDMA_WIFI_PASS
+        string "WiFi 密码"
+        default "0101rdma"
+
+    config RDMA_PEER_IP
+        string "对端 IP"
+        default "192.168.1.100"
+        help
+            target 填 initiator 的 IP;initiator 填 target 的 IP。
+
+    config RDMA_SELF_PORT
+        int "本机数据端口"
+        default 18515
+
+    config RDMA_PEER_PORT
+        int "对端数据端口"
+        default 18516
+
+    config RDMA_MEM_KB
+        int "注册内存 KB(target)"
+        default 128
+        range 64 1024
+
+    config RDMA_ITERS
+        int "延迟测试次数(initiator)"
+        default 300
+
+    config RDMA_THR_OPS
+        int "吞吐测试 1KB 个数(initiator/bench-client)"
+        default 64
+
+    config RDMA_PSK
+        string "安全层 PSK(bench 两板填同一口令,留空=明文)"
+        default ""
+
+    config RDMA_RATE_KBPS
+        int "发送限速 kbps(bench-client,0=不限)"
+        default 0
+
+    config RDMA_LOG_IP
+        string "日志回传地址(WiFi UDP,广播=255.255.255.255,off=关闭)"
+        default "255.255.255.255"
+
+    config RDMA_ADMIN_KEY
+        string "管理密钥(SRCTL 指令鉴权,受信任设备)"
+        default "lrp-admin"
+
+endmenu

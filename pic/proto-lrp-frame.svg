@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400">
+<style>text { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; }</style>
+<rect width="680" height="400" fill="#FFFFFF"/>
+<text x="40" y="38" font-size="16" font-weight="600" fill="#0C447C">LRP-1 帧格式（网络字节序）</text>
+
+<text x="40" y="76" font-size="12" font-weight="500" fill="#0C447C">公共头 10 字节</text>
+<rect x="40" y="86" width="48" height="36" fill="#85B7EB" stroke="#185FA5" stroke-width="1"/>
+<rect x="88" y="86" width="48" height="36" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<rect x="136" y="86" width="96" height="36" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<rect x="232" y="86" width="140" height="36" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<rect x="372" y="86" width="140" height="36" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<text x="64" y="104" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">ver:4|op:4</text>
+<text x="112" y="104" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">flags:8</text>
+<text x="184" y="104" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">conn_id:16(世代)</text>
+<text x="302" y="104" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">qpn:24</text>
+<text x="442" y="104" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">seq:24</text>
+<text x="522" y="104" font-size="11" fill="#5F5E5A">→ 路由/排序用</text>
+
+<text x="40" y="156" font-size="12" font-weight="500" fill="#085041">操作扩展（按 op 三选一）</text>
+<rect x="40" y="166" width="150" height="32" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+<text x="115" y="182" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">WEXT 16B</text>
+<rect x="196" y="166" width="230" height="32" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+<text x="311" y="182" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">va(64)｜key(32)｜length(32)</text>
+<text x="436" y="182" font-size="11" fill="#5F5E5A">Write / ReadReq</text>
+
+<rect x="40" y="204" width="150" height="32" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+<text x="115" y="220" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">AEXT 28B</text>
+<rect x="196" y="204" width="230" height="32" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+<text x="311" y="220" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">va(64)｜key(32)｜arg1(64)｜arg2(64)</text>
+<text x="436" y="220" font-size="11" fill="#5F5E5A">Atomic CAS / FAA</text>
+
+<rect x="40" y="242" width="150" height="32" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+<text x="115" y="258" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">ACK_EXT 6B</text>
+<rect x="196" y="242" width="230" height="32" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+<text x="311" y="258" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">status(8)｜msn(24)｜credit(16)</text>
+<text x="436" y="258" font-size="11" fill="#5F5E5A">ACK 累计确认</text>
+
+<text x="40" y="308" font-size="12" font-weight="500" fill="#0C447C">载荷（0~1KB，SEND/WRITE/READ_RESP）</text>
+<rect x="40" y="318" width="330" height="30" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1"/>
+<text x="205" y="333" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">payload …</text>
+
+<rect x="380" y="318" width="110" height="30" fill="#FCEBEB" stroke="#A32D2D" stroke-width="1"/>
+<text x="435" y="333" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#791F1F">AEAD tag 16B</text>
+<rect x="500" y="318" width="90" height="30" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1"/>
+<text x="545" y="333" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">CRC32C 4B</text>
+
+<text x="40" y="378" font-size="11" fill="#5F5E5A">安全态（LRP-sec-1）：公共头为明文 AAD；扩展+载荷加密认证；nonce = op｜conn_id｜seq</text>
+</svg>

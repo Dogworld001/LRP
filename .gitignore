@@ -1,0 +1,16 @@
+# 构建产物
+build/
+firmware/esp32-node/build/
+firmware/esp32-node/sdkconfig
+firmware/esp32-node/sdkconfig.old
+*.o
+tests/test_loopback
+demo/rdma_demo
+demo/rdma_bench
+demo/rdma_peer
+
+# 实验日志(个人数据)
+logs/
+
+# 系统
+.DS_Store

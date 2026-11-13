@@ -1,0 +1,8 @@
+LRP — 轻量 RDMA 传输协议（Lightweight RDMA Protocol）
+Copyright 2026 狗天下 / Dogworld
+
+本软件由 狗天下/Dogworld 开发，依据 Apache License 2.0 发布（见 LICENSE）。
+协议规格（线格式/状态机/安全层）为原创设计，不兼容任何第三方 RDMA 协议规格。
+
+This product includes software developed by 狗天下/Dogworld.
+Licensed under the Apache License, Version 2.0.

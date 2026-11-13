@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430">
+<style>text { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; }</style>
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+<rect width="680" height="430" fill="#FFFFFF"/>
+<text x="40" y="36" font-size="16" font-weight="600" fill="#0C447C">故障恢复与续传（SRRESUME）双路径</text>
+
+<rect x="190" y="62" width="300" height="44" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<text x="340" y="84" text-anchor="middle" dominant-baseline="central" font-size="13" fill="#0C447C">检测：CQE 错误 / RTO 耗尽 / 心跳 15s 超时</text>
+<line x1="340" y1="106" x2="340" y2="128" stroke="#185FA5" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<rect x="170" y="130" width="340" height="46" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="1"/>
+<text x="340" y="153" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">对端仍存活？（epoch 未变化）</text>
+
+<line x1="270" y1="176" x2="180" y2="218" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="410" y1="176" x2="500" y2="218" stroke="#185FA5" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="196" y="198" font-size="11" fill="#085041">是（闪断）</text>
+<text x="452" y="198" font-size="11" fill="#0C447C">否（重启）</text>
+
+<rect x="40" y="220" width="280" height="52" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+<text x="180" y="240" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#085041">recover_rearm()</text>
+<text x="180" y="259" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">在途帧按原 psn 立即重传</text>
+<line x1="180" y1="272" x2="180" y2="296" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<rect x="40" y="298" width="280" height="52" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+<text x="180" y="318" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#085041">对端重复抑制 / 响应缓存</text>
+<text x="180" y="337" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">续传完成（原子操作绝不重放）</text>
+
+<rect x="360" y="220" width="280" height="52" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.5"/>
+<text x="500" y="240" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#0C447C">reset()：开新序号空间</text>
+<text x="500" y="259" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">SRRESUME 交换 epoch + boundary</text>
+<line x1="500" y1="272" x2="500" y2="296" stroke="#185FA5" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<rect x="360" y="298" width="280" height="52" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<text x="500" y="318" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0C447C">按对端边界 B 分类续传</text>
+<text x="500" y="337" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">写≤B 完成 · 读≤B 重投 · 原子≤B 报不确定</text>
+
+<text x="340" y="392" text-anchor="middle" font-size="11" fill="#5F5E5A">seq &gt; B（未执行）→ 全部按新序号重投；Read 幂等可安全重来，Atomic 结果不确定由应用决定是否重试</text>
+<text x="340" y="412" text-anchor="middle" font-size="11" fill="#5F5E5A">连续 3 次闪断恢复失败自动升级为重启路径</text>
+</svg>
